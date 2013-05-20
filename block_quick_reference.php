@@ -83,8 +83,20 @@ class block_quick_reference extends block_base {
 		</div>
 		<b>User search:</b>
 		<div class="fcontainer clearfix" >
+			<div class="fitem advanced fitem_fgroup" id="fgroup_id_email_grp">
+				ID Number:
+				<select id="id_email_op" name="email_op" style="display:none">
+					<option value="0">contains</option>
+					<option value="1">doesn't contain</option>
+					<option value="2">is equal to</option>
+					<option value="3">starts with</option>
+					<option value="4">ends with</option>
+					<option value="5">is empty</option>
+				</select>
+				<input type="text" id="id_email" name="email">
+			</div>	
 			<div class="fitem advanced fitem_fgroup" id="fgroup_id_firstname_grp">
-				Firstname
+				Firstname:
 				<select id="id_firstname_op" name="firstname_op" style="display:none">
 					<option value="0">contains</option>
 					<option value="1">doesn't contain</option>
@@ -96,7 +108,7 @@ class block_quick_reference extends block_base {
 				<input type="text" id="id_firstname" name="firstname" style="width:160px;">
 			</div>
 			<div class="fitem advanced fitem_fgroup" id="fgroup_id_lastname_grp">
-				Lastname
+				Lastname:
 				<select id="id_lastname_op" name="lastname_op" style="display:none">
 					<option value="0">contains</option>
 					<option value="1">doesn't contain</option>
@@ -127,11 +139,18 @@ class block_quick_reference extends block_base {
 			<input type="submit" id="id_addfilter" value="Go" name="addfilter">
 		</div>
 	</form>
+</div> 	
+EOF;
 
+		//if(is_siteadmin()) print "site admin"; else print "no site admin";
+
+		if(is_siteadmin()) {
+			$this->content->text   .=  <<<EOF
+<div id="quick_ref_block">			
 	<!--<a href="https://vle.conel.ac.uk/admin/user.php">Browse list of users</a><br />-->
 	<ul style='font-size: 0.9em;'>
 		<li><a href="{$CFG->wwwroot}/login/index.php">Login as another user</a></li>
-		<li><a href="{$CFG->wwwroot}/admin/blocks.php">Manage blocks</a></li>
+		<?php if(is_siteadmin()) { ?><li><a href="{$CFG->wwwroot}/admin/blocks.php">Manage blocks</a></li><?php } ?>
 		<!--li><a href="{$CFG->wwwroot}/admin/stickyblocks.php">Sticky blocks</a></li-->
 		<li><a href="{$CFG->wwwroot}/admin/tool/health/index.php">Moodle health check</a></li>
 		<li><a href="{$CFG->wwwroot}/course/index.php">All Courses</a></li>
@@ -143,7 +162,44 @@ class block_quick_reference extends block_base {
 	</ul>
 </div> 	
 EOF;
-    
+		} else {
+			$this->content->text   .=  <<<EOF
+<div id="quick_ref_block">			
+	<ul style='font-size: 0.9em;'>
+		<li><a href="{$CFG->wwwroot}/login/index.php">Login as another user</a></li>
+		<li><a href="{$CFG->wwwroot}/course/index.php">All Courses</a></li>
+	</ul>
+</div> 	
+EOF;
+		}			
+/*
+		if(is_siteadmin()) {
+			$this->content->text   .=  <<<EOF
+	<!--<a href="https://vle.conel.ac.uk/admin/user.php">Browse list of users</a><br />-->
+	<ul style='font-size: 0.9em;'>
+		<li><a href="{$CFG->wwwroot}/login/index.php">Login as another user</a></li>
+		<?php if(is_siteadmin()) { ?><li><a href="{$CFG->wwwroot}/admin/blocks.php">Manage blocks</a></li><?php } ?>
+		<!--li><a href="{$CFG->wwwroot}/admin/stickyblocks.php">Sticky blocks</a></li-->
+		<li><a href="{$CFG->wwwroot}/admin/tool/health/index.php">Moodle health check</a></li>
+		<li><a href="{$CFG->wwwroot}/course/index.php">All Courses</a></li>
+		<li><a href="{$CFG->wwwroot}/blocks/bksb/admin/unmatched_users.php">BKSB – Update Usernames</a></li>
+		<!--li><a href="{$CFG->wwwroot}/mod/resource/type/mrcutejr/import.php">MrCuteJr File Importer</a></li-->
+		<!--li><a href="{$CFG->wwwroot}/blocks/lpr/actions/reports.php?category_id=53&course_id=19367">E-ilp Stats tool</a></li-->
+		<!--li><a href="{$CFG->wwwroot}/stats/index.php?nocache=20110408142940">VLE Stats tool</a></li-->
+		<!--li><a href="{$CFG->wwwroot}/course/view.php?id=19367">Surveys</a></li-->
+	</ul>
+</div> 	
+EOF;
+		} else {
+			$this->content->text   .=  <<<EOF
+	<ul style='font-size: 0.9em;'>
+		<li><a href="{$CFG->wwwroot}/login/index.php">Login as another user</a></li>
+		<li><a href="{$CFG->wwwroot}/course/index.php">All Courses</a></li>
+	</ul>
+</div> 	
+EOF;			
+*/
+		    
 		$this->content->footer = '';
  
 		return $this->content;
